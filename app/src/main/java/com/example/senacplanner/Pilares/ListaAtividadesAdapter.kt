@@ -12,18 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.senacplanner.R
 
 
-class ListaAtividadesAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
-    override fun getItemCount(): Int = 3
+class AtividadeAdapter(private val atividades: List<String>) :
+    RecyclerView.Adapter<AtividadeAdapter.ViewHolder>() {
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> PageFragment()
-            1 -> PageFragment2()
-            2 -> PageFragment3()
-            else -> PageFragment()
-        }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val titulo: TextView = view.findViewById(R.id.atividadePrincipal)
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.lista_atividade, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.titulo.text = atividades[position]
+    }
+
+    override fun getItemCount() = atividades.size
 }
 
 

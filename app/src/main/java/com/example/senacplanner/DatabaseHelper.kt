@@ -262,6 +262,23 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
         return tabelas
     }
 
+    fun listarAtividades(): List<String> {
+        val lista = mutableListOf<String>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT nome FROM Atividade", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"))
+                lista.add(nome)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
+
 
 
 

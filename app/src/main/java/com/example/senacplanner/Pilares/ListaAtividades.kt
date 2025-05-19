@@ -4,25 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.senacplanner.DatabaseHelper
 import com.example.senacplanner.R
+
 
 class ListaAtividadesActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_atividades)
+    val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewAtividades)
+    recyclerView.layoutManager = LinearLayoutManager(this)
 
-        viewPager = findViewById(R.id.viewPager)
-        val adapter = ListaAtividadesAdapter(this)
-        viewPager.adapter = adapter
+    val dbHelper = DatabaseHelper(this)
+    val atividades = dbHelper.listarAtividades() // método que vamos criar
 
-        val btnAdicionarAtividade: Button = findViewById(R.id.btnAdicionarAtividade)
-        btnAdicionarAtividade.setOnClickListener {
-            val intent = Intent(this, CriarAtividadeActivity::class.java)
-            startActivity(intent)
-        }
-    }
+    val adapter = AtividadeAdapter(atividades)
+    recyclerView.adapter = adapter
+
 }
