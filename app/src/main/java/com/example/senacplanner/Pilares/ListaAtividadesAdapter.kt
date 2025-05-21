@@ -34,3 +34,4 @@ class AtividadeAdapter(private val atividades: List<String>) :
 }
 
 
+
